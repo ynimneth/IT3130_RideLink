@@ -6,7 +6,8 @@ spring:
     name: fare-payment-service
   data:
     mongodb:
-      uri: ${SPRING_DATA_MONGODB_URI:mongodb://localhost:27020/ridelink_fares}
+      uri: ${SPRING_DATA_MONGODB_URI:mongodb+srv://ynimneth_db_user:wsq7LSTqyOA2tTQv@cluster0.dvvw3jy.mongodb.net/ridelink_fares?appName=Cluster0}
+      database: ridelink_fares
   rabbitmq:
     host: ${SPRING_RABBITMQ_HOST:localhost}
     port: ${SPRING_RABBITMQ_PORT:5672}
