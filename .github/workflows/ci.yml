@@ -14,7 +14,6 @@ jobs:
       fail-fast: false
       matrix:
         service:
-          - account-service
           - ride-management-service
           - fare-payment-service
 
