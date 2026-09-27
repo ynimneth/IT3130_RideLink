@@ -1,0 +1,24 @@
+spring:
+  data:
+    mongodb:
+      database: ridelink_fares_test
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration
+
+de:
+  flapdoodle:
+    mongodb:
+      embedded:
+        version: 6.0.4
+
+jwt:
+  secret: RideLinkSuperSecretKeyForJWTTokenGeneration2024MustBeLongEnough
+  expiration: 86400000
+
+rabbitmq:
+  exchange: ride.exchange
+  routing-key:
+    completed: ride.completed
+  queue: fare.payment.queue
+

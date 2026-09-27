@@ -5,6 +5,8 @@ import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import org.bson.Document;
+import org.junit.jupiter.api.Assumptions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -19,10 +21,27 @@ import static org.junit.jupiter.api.Assertions.*;
  * and pings the server. This test does NOT require RabbitMQ or the
  * full Spring context — it is a pure infrastructure smoke-test.
  *
- * Run with:
+ * SKIPPED automatically in CI (GitHub Actions sets CI=true).
+ * Run locally with:
  *   mvn test -pl fare-payment-service -Dtest=MongoAtlasConnectionTest
  */
 class MongoAtlasConnectionTest {
+
+    /**
+     * Skip this test entirely in CI environments.
+     * GitHub Actions sets CI=true; the Atlas cluster is not reachable
+     * from ephemeral cloud runners due to SSL/network restrictions.
+     * The test runs only in local developer environments.
+     */
+    @BeforeEach
+    void skipInCiEnvironment() {
+        String ci = System.getenv("CI");
+        Assumptions.assumeTrue(
+                ci == null || ci.isBlank() || "false".equalsIgnoreCase(ci),
+                "Skipping Atlas connection test in CI environment (CI=" + ci + "). " +
+                "Run locally to verify Atlas connectivity."
+        );
+    }
 
     private static final Logger log = LoggerFactory.getLogger(MongoAtlasConnectionTest.class);
 
